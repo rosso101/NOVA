@@ -115,7 +115,6 @@
       display: flex; align-items: center; justify-content: flex-end;
     }
 
-    /* LOGO AREA — replaces product placeholder, blobs remain untouched */
     .hero-logo-area {
       position: absolute;
       right: 8%; top: 50%;
@@ -294,7 +293,6 @@
       font-size: clamp(22px, 3vw, 36px); letter-spacing: 2px;
       color: var(--white); margin-bottom: 4px;
     }
-    /* ── CHANGE 1: Slightly larger product text ── */
     .p-price { font-size: 15px; color: var(--accent); letter-spacing: 1px; }
     .p-price-old { font-size: 13px; color: var(--muted); text-decoration: line-through; margin-left: 8px; }
 
@@ -314,7 +312,20 @@
     .p-card:hover .get-yours-btn { opacity: 1; transform: translateY(0); }
     .get-yours-btn:hover { background: var(--white); }
 
-    /* OLD p-action kept for WhatsApp links but hidden — we'll use modal instead */
+    /* COMING SOON BADGE on overlay */
+    .coming-soon-label {
+      margin-top: 14px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid rgba(200,184,154,0.2);
+      color: var(--muted);
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      width: fit-content;
+    }
+
     .p-action { display: none; }
 
     /* LIMITED BADGE */
@@ -372,6 +383,20 @@
       transition: all 0.3s; font-family: 'DM Sans', sans-serif;
     }
     .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+
+    /* Pre-order notice banner */
+    .modal-preorder-notice {
+      display: none;
+      align-items: center; gap: 10px;
+      padding: 12px 16px;
+      background: rgba(200,184,154,0.08);
+      border: 1px solid rgba(200,184,154,0.2);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 12px; letter-spacing: 1px; color: var(--accent);
+    }
+    .modal-preorder-notice.show { display: flex; }
+    .modal-preorder-notice svg { flex-shrink: 0; opacity: 0.8; }
 
     .modal-product-tag {
       font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
@@ -615,12 +640,9 @@
       nav { padding: 20px; }
       .nav-links { display: none; }
       .hero-content { max-width: 100%; padding: 0 20px 60px; }
-      /* CHANGE 2: Logo area hidden on mobile — doesn't interfere */
       .hero-logo-area { display: none; }
       .hero-title { font-size: clamp(56px, 15vw, 80px); }
       .category-nav { padding: 60px 20px 30px; }
-
-      /* ── CHANGE 2: Fix product grid on mobile ── */
       .product-grid {
         padding: 0 16px 60px;
         display: flex; flex-direction: column; gap: 16px;
@@ -628,7 +650,6 @@
       .p-card { width: 100% !important; grid-column: unset !important; grid-row: unset !important; }
       .p-card.tall { grid-row: unset; }
       .p-img { min-height: 280px; }
-
       .lifestyle-banner { margin: 0 20px 60px; }
       .lifestyle-content { max-width: 100%; padding: 36px; }
       .lifestyle-stats { gap: 24px; }
@@ -639,8 +660,6 @@
       .footer-social { justify-content: flex-start; }
       body { cursor: auto; }
       .cursor, .cursor-ring { display: none; }
-
-      /* Modal adjustments */
       .modal-sheet { padding: 28px 24px 40px; border-radius: 24px 24px 0 0; }
       .modal-product-name { font-size: 32px; }
     }
@@ -657,7 +676,7 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- BLOB BACKGROUND — untouched -->
+  <!-- BLOB BACKGROUND -->
   <div class="blob-bg">
     <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
       <path fill="rgba(200,184,154,1)" d="M300,50 C420,50 550,120 550,300 C550,480 420,550 300,550 C180,550 50,480 50,300 C50,120 180,50 300,50 Z">
@@ -694,10 +713,7 @@
       <div class="hero-media-inner"></div>
     </div>
 
-    <!-- CHANGE 4: Logo area replaces product placeholder. Blobs stay in blob-bg above. -->
     <div class="hero-logo-area">
-      <!-- When you add LOGO2.png/jpg, replace the fallback div below with:
-           <img class="hero-logo-img" src="LOGO2.png" alt="NOVA Logo"> -->
       <div class="hero-logo-fallback">NOV<span>A</span></div>
     </div>
 
@@ -747,7 +763,7 @@
 
     <div class="product-grid" id="productGrid">
 
-      <!-- T-SHIRTS -->
+      <!-- T-SHIRTS — Available for Pre-Order → shows "Get Yours" button -->
       <div class="p-card large c1 reveal" data-cat="all men women">
         <div class="limited-badge"><div class="badge-dot"></div><span class="badge-text">Limited</span></div>
         <div class="p-img">
@@ -762,21 +778,23 @@
         <div class="p-overlay">
           <div class="p-tag">Unisex</div>
           <div class="p-name">Nova Tee</div>
+          <div class="p-price">Available For Pre-Order</div>
           <div class="p-price">KES 1,499 <span class="p-price-old">KES 1,700</span></div>
           <button class="get-yours-btn"
             data-name="Nova Tee"
             data-price="1499"
             data-tag="Unisex"
+            data-preorder="true"
             data-colors='["White","Black","Charcoal","Sand"]'
             data-sizes='["XS","S","M","L","XL","XXL"]'
             onclick="openModal(this)">
-            Get Yours
+            Pre-Order Now
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- ZIPPER HOODIE -->
+      <!-- ZIPPER HOODIE — Available for Pre-Order → shows "Get Yours" button -->
       <div class="p-card medium tall c2 reveal reveal-delay-1" data-cat="all men women comfortable">
         <div class="p-img">
           <div class="p-img-inner">
@@ -789,21 +807,23 @@
         <div class="p-overlay">
           <div class="p-tag">Most Comfortable</div>
           <div class="p-name">Nova Zip</div>
+          <div class="p-price">Available For Pre-Order</div>
           <div class="p-price">KES 2,800 <span class="p-price-old">KES 3,189</span></div>
           <button class="get-yours-btn"
             data-name="Nova Zip"
             data-price="2800"
             data-tag="Most Comfortable"
+            data-preorder="true"
             data-colors='["Black","Cream","Olive","Navy"]'
             data-sizes='["XS","S","M","L","XL","XXL"]'
             onclick="openModal(this)">
-            Get Yours
+            Pre-Order Now
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- SHORTS -->
+      <!-- SHORTS — Coming Soon → no button -->
       <div class="p-card small c3 reveal reveal-delay-2" data-cat="all men">
         <div class="p-img">
           <div class="p-img-inner">
@@ -819,21 +839,16 @@
         <div class="p-overlay">
           <div class="p-tag">Men</div>
           <div class="p-name">Nova Shorts</div>
+          <div class="p-price">Coming Soon</div>
           <div class="p-price">KES 899</div>
-          <button class="get-yours-btn"
-            data-name="Nova Shorts"
-            data-price="899"
-            data-tag="Men"
-            data-colors='["Black","Grey","Navy","Khaki"]'
-            data-sizes='["S","M","L","XL","XXL"]'
-            onclick="openModal(this)">
-            Get Yours
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
+          <div class="coming-soon-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Dropping Soon
+          </div>
         </div>
       </div>
 
-      <!-- CROP TOP -->
+      <!-- CROP TOP — Coming Soon → no button -->
       <div class="p-card small c4 reveal reveal-delay-1" data-cat="all women">
         <div class="p-img">
           <div class="p-img-inner">
@@ -849,23 +864,17 @@
         <div class="p-overlay">
           <div class="p-tag">Women</div>
           <div class="p-name">Nova Crop</div>
+          <div class="p-price">Coming Soon</div>
           <div class="p-price">KES 999</div>
-          <button class="get-yours-btn"
-            data-name="Nova Crop"
-            data-price="999"
-            data-tag="Women"
-            data-colors='["White","Black","Blush","Sage"]'
-            data-sizes='["XS","S","M","L","XL"]'
-            onclick="openModal(this)">
-            Get Yours
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
+          <div class="coming-soon-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Dropping Soon
+          </div>
         </div>
       </div>
 
-      <!-- SWEATPANTS -->
+      <!-- SWEATPANTS — Coming Soon → no button -->
       <div class="p-card medium c5 reveal reveal-delay-2" data-cat="all men women comfortable">
-        <div class="limited-badge"><div class="badge-dot"></div><span class="badge-text">Drop Soon</span></div>
         <div class="p-img">
           <div class="p-img-inner">
             <div class="p-placeholder">
@@ -880,17 +889,12 @@
         <div class="p-overlay">
           <div class="p-tag">Most Comfortable</div>
           <div class="p-name">Nova Sweats</div>
+          <div class="p-price">Coming Soon</div>
           <div class="p-price">KES 1,599</div>
-          <button class="get-yours-btn"
-            data-name="Nova Sweats"
-            data-price="1599"
-            data-tag="Most Comfortable"
-            data-colors='["Black","Charcoal","Sand","Olive"]'
-            data-sizes='["XS","S","M","L","XL","XXL"]'
-            onclick="openModal(this)">
-            Get Yours
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
+          <div class="coming-soon-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Dropping Soon
+          </div>
         </div>
       </div>
 
@@ -972,6 +976,12 @@
       <div class="modal-handle"></div>
       <button class="modal-close" onclick="closeModal()">×</button>
 
+      <!-- Pre-order notice (shown only for pre-order items) -->
+      <div class="modal-preorder-notice" id="modalPreorderNotice">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        This item is available for pre-order — we'll confirm your slot on WhatsApp.
+      </div>
+
       <div class="modal-product-tag" id="modalTag">Unisex</div>
       <div class="modal-product-name" id="modalName">Nova Tee</div>
       <div class="modal-product-price" id="modalPrice">KES 1,499</div>
@@ -1036,7 +1046,7 @@
 
       <!-- CONFIRM -->
       <a class="modal-confirm" id="modalConfirm" href="#" target="_blank">
-        Order on WhatsApp
+        <span id="modalConfirmLabel">Order on WhatsApp</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>
       </a>
     </div>
@@ -1076,7 +1086,7 @@
     }
 
     // ── ORDER MODAL ──
-    let modalState = { name: '', price: 0, size: '', color: '', qty: 1, location: '' };
+    let modalState = { name: '', price: 0, size: '', color: '', qty: 1, location: '', isPreorder: false };
 
     const COLOR_DOTS = {
       'White': '#f0ede8', 'Black': '#1a1a1a', 'Charcoal': '#4a4a4a',
@@ -1086,13 +1096,14 @@
     };
 
     function openModal(btn) {
-      const name   = btn.dataset.name;
-      const price  = parseInt(btn.dataset.price);
-      const tag    = btn.dataset.tag;
-      const colors = JSON.parse(btn.dataset.colors);
-      const sizes  = JSON.parse(btn.dataset.sizes);
+      const name      = btn.dataset.name;
+      const price     = parseInt(btn.dataset.price);
+      const tag       = btn.dataset.tag;
+      const colors    = JSON.parse(btn.dataset.colors);
+      const sizes     = JSON.parse(btn.dataset.sizes);
+      const isPreorder = btn.dataset.preorder === 'true';
 
-      modalState = { name, price, size: '', color: '', qty: 1, location: '' };
+      modalState = { name, price, size: '', color: '', qty: 1, location: '', isPreorder };
 
       document.getElementById('modalTag').textContent   = tag;
       document.getElementById('modalName').textContent  = name;
@@ -1101,6 +1112,17 @@
       document.getElementById('locationInput').value    = '';
       document.getElementById('locationSuggestions').classList.remove('show');
       document.getElementById('mapPreview').classList.remove('show');
+
+      // Show/hide pre-order notice
+      const notice = document.getElementById('modalPreorderNotice');
+      const confirmLabel = document.getElementById('modalConfirmLabel');
+      if (isPreorder) {
+        notice.classList.add('show');
+        confirmLabel.textContent = 'Pre-Order on WhatsApp';
+      } else {
+        notice.classList.remove('show');
+        confirmLabel.textContent = 'Order on WhatsApp';
+      }
 
       // Sizes
       const sg = document.getElementById('sizeGrid');
@@ -1208,14 +1230,13 @@
       const preview = document.getElementById('mapPreview');
       const placeholder = document.getElementById('mapPlaceholder');
       preview.classList.add('show');
-      // Use Google Maps embed with query
       const query = encodeURIComponent(loc + ', Kenya');
       const embedUrl = `https://maps.google.com/maps?q=${query}&t=&z=14&ie=UTF8&iwloc=&output=embed`;
       placeholder.innerHTML = `<iframe src="${embedUrl}" width="100%" height="140" style="border:0;border-radius:12px" allowfullscreen="" loading="lazy"></iframe>`;
     }
 
     function updateSummary() {
-      const { name, price, size, color, qty, location } = modalState;
+      const { name, price, size, color, qty, location, isPreorder } = modalState;
       document.getElementById('summaryItem').textContent    = name || '—';
       document.getElementById('summarySize').textContent    = size || '—';
       document.getElementById('summaryColor').textContent   = color || '—';
@@ -1224,8 +1245,14 @@
       const total = price * qty;
       document.getElementById('summaryTotal').textContent   = 'KES ' + total.toLocaleString();
 
-      // Build WhatsApp link
-      const msg = `Hi! I'd like to order:\n\n🛍️ *${name}*\n📏 Size: ${size || 'TBD'}\n🎨 Colour: ${color || 'TBD'}\n🔢 Qty: ${qty}\n📍 Delivery: ${location || 'TBD'}\n💰 Total: KES ${total.toLocaleString()}\n\nPlease confirm availability!`;
+      // Build WhatsApp message — pre-order vs regular
+      let msg;
+      if (isPreorder) {
+        msg = `Hi! I'd love to pre-order:\n\n🛍️ *${name}*\n📏 Size: ${size || 'TBD'}\n🎨 Colour: ${color || 'TBD'}\n🔢 Qty: ${qty}\n📍 Delivery: ${location || 'TBD'}\n💰 Total: KES ${total.toLocaleString()}\n\nPlease confirm my pre-order slot — I can't wait! 🙏`;
+      } else {
+        msg = `Hi! I'd like to order:\n\n🛍️ *${name}*\n📏 Size: ${size || 'TBD'}\n🎨 Colour: ${color || 'TBD'}\n🔢 Qty: ${qty}\n📍 Delivery: ${location || 'TBD'}\n💰 Total: KES ${total.toLocaleString()}\n\nPlease confirm availability!`;
+      }
+
       document.getElementById('modalConfirm').href = `https://wa.me/254745151478?text=${encodeURIComponent(msg)}`;
     }
 
