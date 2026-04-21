@@ -89,6 +89,7 @@
     .nav-links a {
       font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       color: var(--muted); text-decoration: none; transition: color 0.3s;
+      cursor: none;
     }
     .nav-links a:hover { color: var(--white); }
     .nav-cta {
@@ -182,12 +183,15 @@
       font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       font-weight: 500; text-decoration: none; border-radius: 100px;
       transition: all 0.3s; cursor: none;
+      border: none; font-family: 'DM Sans', sans-serif;
     }
     .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
     .btn-ghost-hero {
       font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       color: var(--muted); text-decoration: none; padding: 16px 0;
       border-bottom: 1px solid var(--border); transition: all 0.3s; cursor: none;
+      background: none; border-top: none; border-left: none; border-right: none;
+      font-family: 'DM Sans', sans-serif;
     }
     .btn-ghost-hero:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
     .hero-scroll {
@@ -595,6 +599,7 @@
       font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
       font-weight: 500; text-decoration: none; border-radius: 100px;
       transition: all 0.3s; cursor: none;
+      border: none; font-family: 'DM Sans', sans-serif;
     }
     .fomo-card-cta:hover { transform: translateY(-2px); opacity: 0.9; }
 
@@ -610,7 +615,7 @@
     .footer-links { display: flex; flex-direction: column; gap: 14px; }
     .footer-links a {
       font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.3s;
+      color: var(--muted); text-decoration: none; transition: color 0.3s; cursor: none;
     }
     .footer-links a:hover { color: var(--white); }
     .footer-right { text-align: right; }
@@ -624,7 +629,7 @@
     .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 2px; }
     .footer-stars-link {
       font-size: 11px; letter-spacing: 2px; color: var(--accent);
-      text-decoration: none; opacity: 0.6; transition: opacity 0.3s;
+      text-decoration: none; opacity: 0.6; transition: opacity 0.3s; cursor: none;
     }
     .footer-stars-link:hover { opacity: 1; }
 
@@ -700,9 +705,9 @@
   <nav>
     <a class="nav-logo" href="#">NOV<span>A</span></a>
     <ul class="nav-links">
-      <li><a href="#men">Men</a></li>
-      <li><a href="#women">Women</a></li>
-      <li><a href="#comfortable">Most Comfortable</a></li>
+      <li><a href="#" onclick="scrollToCollection('men'); return false;">Men</a></li>
+      <li><a href="#" onclick="scrollToCollection('women'); return false;">Women</a></li>
+      <li><a href="#" onclick="scrollToCollection('comfortable'); return false;">Most Comfortable</a></li>
     </ul>
     <a class="nav-cta" href="https://wa.me/254745151478" target="_blank">Order Now</a>
   </nav>
@@ -722,11 +727,11 @@
       <h1 class="hero-title">MOVE<br><span class="italic">Different</span></h1>
       <p class="hero-sub">Clothing built for the in-between. From your morning run to wherever the day takes you — NOVA moves with you.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="#collection">
+        <button class="btn-primary" onclick="scrollToCollection('all')">
           Shop Now
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </a>
-        <a class="btn-ghost-hero" href="#comfortable">Most Comfortable →</a>
+        </button>
+        <button class="btn-ghost-hero" onclick="scrollToCollection('comfortable')">Most Comfortable →</button>
       </div>
     </div>
 
@@ -763,7 +768,7 @@
 
     <div class="product-grid" id="productGrid">
 
-      <!-- T-SHIRTS — Available for Pre-Order → shows "Get Yours" button -->
+      <!-- T-SHIRTS -->
       <div class="p-card large c1 reveal" data-cat="all men women">
         <div class="limited-badge"><div class="badge-dot"></div><span class="badge-text">Limited</span></div>
         <div class="p-img">
@@ -794,7 +799,7 @@
         </div>
       </div>
 
-      <!-- ZIPPER HOODIE — Available for Pre-Order → shows "Get Yours" button -->
+      <!-- ZIPPER HOODIE -->
       <div class="p-card medium tall c2 reveal reveal-delay-1" data-cat="all men women comfortable">
         <div class="p-img">
           <div class="p-img-inner">
@@ -823,7 +828,7 @@
         </div>
       </div>
 
-      <!-- SHORTS — Coming Soon → no button -->
+      <!-- SHORTS -->
       <div class="p-card small c3 reveal reveal-delay-2" data-cat="all men">
         <div class="p-img">
           <div class="p-img-inner">
@@ -848,7 +853,7 @@
         </div>
       </div>
 
-      <!-- CROP TOP — Coming Soon → no button -->
+      <!-- CROP TOP -->
       <div class="p-card small c4 reveal reveal-delay-1" data-cat="all women">
         <div class="p-img">
           <div class="p-img-inner">
@@ -873,7 +878,7 @@
         </div>
       </div>
 
-      <!-- SWEATPANTS — Coming Soon → no button -->
+      <!-- SWEATPANTS -->
       <div class="p-card medium c5 reveal reveal-delay-2" data-cat="all men women comfortable">
         <div class="p-img">
           <div class="p-img-inner">
@@ -926,20 +931,20 @@
         <div class="fomo-card-eyebrow">Limited Offer</div>
         <h3 class="fomo-card-title">SURPRISE<br>GIFT WITH<br>EVERY ORDER</h3>
         <p class="fomo-card-body">Every NOVA order ships with a mystery gift. Limited stock — once it's gone, it's gone. Don't sleep on it.</p>
-        <a class="fomo-card-cta" href="https://wa.me/254745151478" target="_blank">
+        <button class="fomo-card-cta" onclick="scrollToCollection('all')">
           Claim Yours
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </a>
+        </button>
       </div>
       <div class="fomo-card accent-card reveal reveal-delay-1">
         <div class="fomo-blob-decor"></div>
         <div class="fomo-card-eyebrow">Most Comfortable</div>
         <h3 class="fomo-card-title">MADE TO<br>FEEL<br>NOTHING</h3>
         <p class="fomo-card-body">Our sweats and zip hoodies are engineered for maximum comfort. So soft you forget you're wearing them.</p>
-        <a class="fomo-card-cta" href="https://wa.me/254745151478" target="_blank">
+        <button class="fomo-card-cta" onclick="scrollToCollection('comfortable')">
           Shop Comfy
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -951,9 +956,9 @@
       <div class="footer-tagline">Move Different — by STARS Kenya</div>
     </div>
     <div class="footer-links">
-      <a href="#men">Men's Collection</a>
-      <a href="#women">Women's Collection</a>
-      <a href="#comfortable">Most Comfortable</a>
+      <a href="#" onclick="scrollToCollection('men'); return false;">Men's Collection</a>
+      <a href="#" onclick="scrollToCollection('women'); return false;">Women's Collection</a>
+      <a href="#" onclick="scrollToCollection('comfortable'); return false;">Most Comfortable</a>
       <a href="https://wa.me/254745151478" target="_blank">Contact & Orders</a>
     </div>
     <div class="footer-right">
@@ -976,7 +981,6 @@
       <div class="modal-handle"></div>
       <button class="modal-close" onclick="closeModal()">×</button>
 
-      <!-- Pre-order notice (shown only for pre-order items) -->
       <div class="modal-preorder-notice" id="modalPreorderNotice">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
         This item is available for pre-order — we'll confirm your slot on WhatsApp.
@@ -986,19 +990,16 @@
       <div class="modal-product-name" id="modalName">Nova Tee</div>
       <div class="modal-product-price" id="modalPrice">KES 1,499</div>
 
-      <!-- SIZE -->
       <div class="modal-section">
         <span class="modal-label">Size</span>
         <div class="size-grid" id="sizeGrid"></div>
       </div>
 
-      <!-- COLOR -->
       <div class="modal-section">
         <span class="modal-label">Colour</span>
         <div class="color-grid" id="colorGrid"></div>
       </div>
 
-      <!-- QUANTITY -->
       <div class="modal-section">
         <span class="modal-label">Quantity</span>
         <div class="qty-control">
@@ -1008,7 +1009,6 @@
         </div>
       </div>
 
-      <!-- DELIVERY LOCATION -->
       <div class="modal-section">
         <span class="modal-label">Delivery Location</span>
         <div class="location-input-wrap">
@@ -1034,7 +1034,6 @@
         </div>
       </div>
 
-      <!-- SUMMARY -->
       <div class="order-summary" id="orderSummary">
         <div class="summary-row"><span>Item</span><span class="summary-val" id="summaryItem">—</span></div>
         <div class="summary-row"><span>Size</span><span class="summary-val" id="summarySize">—</span></div>
@@ -1044,7 +1043,6 @@
         <div class="summary-row total"><span>Total</span><span id="summaryTotal">KES —</span></div>
       </div>
 
-      <!-- CONFIRM -->
       <a class="modal-confirm" id="modalConfirm" href="#" target="_blank">
         <span id="modalConfirmLabel">Order on WhatsApp</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>
@@ -1074,6 +1072,25 @@
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
     }, { threshold: 0.12 });
     revealEls.forEach(el => revealObs.observe(el));
+
+    // ── NAVIGATION + FILTER ──
+    // Scrolls to #collection, then applies a filter tab
+    function scrollToCollection(cat) {
+      const section = document.getElementById('collection');
+      section.scrollIntoView({ behavior: 'smooth' });
+
+      // Apply filter after a short delay so the scroll starts first
+      setTimeout(() => {
+        const tabMap = {
+          'all':         document.querySelector('.cat-tab:nth-child(1)'),
+          'men':         document.getElementById('tab-men'),
+          'women':       document.getElementById('tab-women'),
+          'comfortable': document.getElementById('tab-comfortable')
+        };
+        const targetTab = tabMap[cat];
+        if (targetTab) filterProducts(cat, targetTab);
+      }, 100);
+    }
 
     // PRODUCT FILTER
     function filterProducts(cat, btn) {
@@ -1113,7 +1130,6 @@
       document.getElementById('locationSuggestions').classList.remove('show');
       document.getElementById('mapPreview').classList.remove('show');
 
-      // Show/hide pre-order notice
       const notice = document.getElementById('modalPreorderNotice');
       const confirmLabel = document.getElementById('modalConfirmLabel');
       if (isPreorder) {
@@ -1124,13 +1140,11 @@
         confirmLabel.textContent = 'Order on WhatsApp';
       }
 
-      // Sizes
       const sg = document.getElementById('sizeGrid');
       sg.innerHTML = sizes.map(s =>
         `<button class="size-btn" onclick="selectSize('${s}', this)">${s}</button>`
       ).join('');
 
-      // Colors
       const cg = document.getElementById('colorGrid');
       cg.innerHTML = colors.map(c => {
         const dot = COLOR_DOTS[c] || '#888';
@@ -1245,7 +1259,6 @@
       const total = price * qty;
       document.getElementById('summaryTotal').textContent   = 'KES ' + total.toLocaleString();
 
-      // Build WhatsApp message — pre-order vs regular
       let msg;
       if (isPreorder) {
         msg = `Hi! I'd love to pre-order:\n\n🛍️ *${name}*\n📏 Size: ${size || 'TBD'}\n🎨 Colour: ${color || 'TBD'}\n🔢 Qty: ${qty}\n📍 Delivery: ${location || 'TBD'}\n💰 Total: KES ${total.toLocaleString()}\n\nPlease confirm my pre-order slot — I can't wait! 🙏`;
@@ -1259,7 +1272,6 @@
     // Close on escape
     document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 
-    // Prevent suggestions closing on input click
     document.getElementById('locationInput').addEventListener('blur', () => {
       setTimeout(() => document.getElementById('locationSuggestions').classList.remove('show'), 200);
     });
