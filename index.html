@@ -340,6 +340,22 @@
 
     .p-action { display: none; }
 
+    /* EXPAND BUTTON — "View Options" — enlarges the tile to reveal design options */
+    .expand-btn {
+      position: absolute; top: 16px; right: 16px; z-index: 6;
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px 8px 12px; border-radius: 100px;
+      background: rgba(10,10,8,0.78); border: 1px solid rgba(242,100,25,0.3);
+      backdrop-filter: blur(8px);
+      color: var(--accent); cursor: none;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      font-weight: 500; font-family: 'DM Sans', sans-serif;
+      transition: all 0.3s;
+      opacity: 0.92; white-space: nowrap;
+    }
+    .expand-btn:hover { background: var(--accent); color: var(--black); transform: scale(1.04); }
+    .expand-btn svg { flex-shrink: 0; }
+
     /* LIMITED BADGE */
     .limited-badge {
       position: absolute; top: 16px; left: 16px; z-index: 5;
@@ -537,6 +553,86 @@
     }
     .modal-confirm:hover { background: var(--white); transform: translateY(-2px); }
 
+    /* ── OPTIONS MODAL — the "enlarge" view showing a product's designs/variants ── */
+    .options-overlay {
+      position: fixed; inset: 0; z-index: 9200;
+      background: rgba(0,0,0,0); backdrop-filter: blur(0px);
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; padding: 20px;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .options-overlay.open {
+      background: rgba(0,0,0,0.78); backdrop-filter: blur(8px);
+      pointer-events: all;
+    }
+    .options-sheet {
+      width: 100%; max-width: 620px; max-height: 88vh;
+      background: #1a1917;
+      border: 1px solid rgba(242,100,25,0.12);
+      border-radius: 24px;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.9); opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+      padding: 32px 28px 36px;
+    }
+    .options-overlay.open .options-sheet { transform: scale(1); opacity: 1; }
+
+    .options-close {
+      position: absolute; top: 18px; right: 18px; z-index: 5;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted); font-size: 18px; cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+    }
+    .options-close:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+
+    .options-tag {
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .options-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 7vw, 40px);
+      letter-spacing: 2px; color: var(--white); margin-bottom: 8px;
+    }
+    .options-desc {
+      font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300;
+      margin-bottom: 26px; max-width: 90%;
+    }
+    .options-subtitle {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 14px; display: block;
+    }
+
+    .subproduct-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    }
+    .subproduct-card {
+      position: relative; overflow: hidden; border-radius: 16px;
+      background: var(--surface); border: 1px solid var(--border);
+      cursor: none; transition: transform 0.3s, border-color 0.3s;
+      text-align: left; font-family: 'DM Sans', sans-serif; color: var(--white);
+      display: flex; flex-direction: column;
+    }
+    .subproduct-card:hover { transform: translateY(-3px); border-color: rgba(242,100,25,0.3); }
+
+    .subproduct-media {
+      width: 100%; height: 130px; overflow: hidden; position: relative;
+      background: linear-gradient(145deg, #1c1a16 0%, #221e17 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .subproduct-media img { width: 100%; height: 100%; object-fit: contain; }
+    .subproduct-media .p-placeholder-icon { width: 46px; height: 46px; margin-bottom: 0; }
+
+    .subproduct-info { padding: 12px 14px 14px; }
+    .subproduct-name {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; letter-spacing: 1px; font-weight: 500; margin-bottom: 4px;
+    }
+    .subproduct-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0; }
+    .subproduct-price { font-size: 11.5px; color: var(--accent); }
+
     /* LIFESTYLE BANNER */
     .lifestyle-banner {
       margin: 0 24px 60px; border-radius: 24px; overflow: hidden;
@@ -717,6 +813,11 @@
       .modal-product-name { font-size: clamp(24px, 7vw, 34px); }
       .size-btn { width: 42px; height: 42px; font-size: 11px; }
       .color-btn { padding: 7px 12px; font-size: 11px; }
+
+      .options-sheet { max-height: 92vh; border-radius: 20px; padding: 26px 18px 30px; }
+      .subproduct-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .subproduct-media { height: 100px; }
+      .expand-btn { padding: 7px 12px 7px 10px; font-size: 8.5px; top: 12px; right: 12px; }
     }
 
     /* ═══════════════════════════════
@@ -830,6 +931,25 @@
       <!-- T-SHIRTS -->
       <div class="p-card large c1 reveal" data-cat="all men women">
         <div class="limited-badge"><div class="badge-dot"></div><span class="badge-text">Limited</span></div>
+        <button class="expand-btn"
+          data-name="Nova Tee"
+          data-price="1499"
+          data-tag="Unisex"
+          data-preorder="true"
+          data-colors='["White","Black","Charcoal","Sand"]'
+          data-sizes='["XS","S","M","L","XL","XXL"]'
+          data-img="NOVA -T-shirt.jpg"
+          data-desc="Cut from an ultra-soft cotton blend that breathes with every move — a minimalist silhouette with a relaxed drape. No loud print, just a clean cut you won't find anywhere else."
+          data-subproducts='[
+            {"name":"Nova Tee — Classic White","color":"White","img":"NOVA -T-shirt-white.jpg"},
+            {"name":"Nova Tee — Blackout","color":"Black","img":"NOVA -T-shirt-black.jpg"},
+            {"name":"Nova Tee — Charcoal Edit","color":"Charcoal","img":"NOVA -T-shirt-charcoal.jpg"},
+            {"name":"Nova Tee — Desert Sand","color":"Sand","img":"NOVA -T-shirt-sand.jpg"}
+          ]'
+          onclick="openOptions(this)" title="View design options">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          View Options
+        </button>
         <div class="p-img">
           <div class="p-img-inner">
             <div class="p-placeholder">
@@ -852,7 +972,7 @@
             data-colors='["White","Black","Charcoal","Sand"]'
             data-sizes='["XS","S","M","L","XL","XXL"]'
             onclick="openModal(this)">
-            Pre-Order Now
+            Order Now
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -860,6 +980,25 @@
 
       <!-- ZIPPER HOODIE -->
       <div class="p-card medium tall c2 reveal reveal-delay-1" data-cat="all men women comfortable">
+        <button class="expand-btn"
+          data-name="Nova Zip"
+          data-price="2800"
+          data-tag="Most Comfortable"
+          data-preorder="true"
+          data-colors='["Black","Cream","Olive","Navy"]'
+          data-sizes='["XS","S","M","L","XL","XXL"]'
+          data-img="NOVA zipper hoodie.jpg"
+          data-desc="Brushed fleece on the inside, a relaxed drop-shoulder cut on the outside, and a smooth YKK zip that glides every time — engineered for the coldest mornings and the calmest evenings."
+          data-subproducts='[
+            {"name":"Nova Zip — Midnight","color":"Black","img":"NOVA zipper hoodie-black.jpg"},
+            {"name":"Nova Zip — Cream Edit","color":"Cream","img":"NOVA zipper hoodie-cream.jpg"},
+            {"name":"Nova Zip — Olive Edit","color":"Olive","img":"NOVA zipper hoodie-olive.jpg"},
+            {"name":"Nova Zip — Navy Edit","color":"Navy","img":"NOVA zipper hoodie-navy.jpg"}
+          ]'
+          onclick="openOptions(this)" title="View design options">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          View Options
+        </button>
         <div class="p-img">
           <div class="p-img-inner">
             <div class="p-placeholder">
@@ -881,7 +1020,7 @@
             data-colors='["Black","Cream","Olive","Navy"]'
             data-sizes='["XS","S","M","L","XL","XXL"]'
             onclick="openModal(this)">
-            Pre-Order Now
+            Order Now
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -889,6 +1028,24 @@
 
       <!-- SHORTS -->
       <div class="p-card small c3 reveal reveal-delay-2" data-cat="all men">
+        <button class="expand-btn"
+          data-name="Nova Shorts"
+          data-price="899"
+          data-tag="Men"
+          data-preorder="true"
+          data-colors='["Black","Grey","Navy"]'
+          data-sizes='["S","M","L","XL"]'
+          data-img=""
+          data-desc="Quick-dry stretch fabric that moves with you, tailored — not baggy — for a fit that stays sharp mid-run. A colour-blocked side panel gives it a look you won't see on anyone else on the track."
+          data-subproducts='[
+            {"name":"Nova Shorts — Blackout","color":"Black","img":"nova-shorts-black.jpg"},
+            {"name":"Nova Shorts — Grey Edit","color":"Grey","img":"nova-shorts-grey.jpg"},
+            {"name":"Nova Shorts — Navy Edit","color":"Navy","img":"nova-shorts-navy.jpg"}
+          ]'
+          onclick="openOptions(this)" title="View design options">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          View Options
+        </button>
         <div class="p-img">
           <div class="p-img-inner">
             <div class="p-placeholder">
@@ -903,17 +1060,43 @@
         <div class="p-overlay">
           <div class="p-tag">Men</div>
           <div class="p-name">Nova Shorts</div>
-          <div class="p-price">Coming Soon</div>
+          <div class="p-price">Available For Pre-Order</div>
           <div class="p-price">KES 899</div>
-          <div class="coming-soon-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Dropping Soon
-          </div>
+          <button class="get-yours-btn"
+            data-name="Nova Shorts"
+            data-price="899"
+            data-tag="Men"
+            data-preorder="true"
+            data-colors='["Black","Grey","Navy"]'
+            data-sizes='["S","M","L","XL"]'
+            onclick="openModal(this)">
+            Order Now
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
         </div>
       </div>
 
       <!-- CROP TOP -->
       <div class="p-card small c4 reveal reveal-delay-1" data-cat="all women">
+        <button class="expand-btn"
+          data-name="Nova Crop"
+          data-price="999"
+          data-tag="Women"
+          data-preorder="true"
+          data-colors='["Black","White","Blush","Sage"]'
+          data-sizes='["XS","S","M","L"]'
+          data-img=""
+          data-desc="A second-skin ribbed knit with an adjustable waist tie so it moves the way you do — never restrictive, never loose. A silhouette that's unmistakably NOVA."
+          data-subproducts='[
+            {"name":"Nova Crop — Blackout","color":"Black","img":"nova-crop-black.jpg"},
+            {"name":"Nova Crop — Classic White","color":"White","img":"nova-crop-white.jpg"},
+            {"name":"Nova Crop — Blush Edit","color":"Blush","img":"nova-crop-blush.jpg"},
+            {"name":"Nova Crop — Sage Edit","color":"Sage","img":"nova-crop-sage.jpg"}
+          ]'
+          onclick="openOptions(this)" title="View design options">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          View Options
+        </button>
         <div class="p-img">
           <div class="p-img-inner">
             <div class="p-placeholder">
@@ -928,17 +1111,43 @@
         <div class="p-overlay">
           <div class="p-tag">Women</div>
           <div class="p-name">Nova Crop</div>
-          <div class="p-price">Coming Soon</div>
+          <div class="p-price">Available For Pre-Order</div>
           <div class="p-price">KES 999</div>
-          <div class="coming-soon-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Dropping Soon
-          </div>
+          <button class="get-yours-btn"
+            data-name="Nova Crop"
+            data-price="999"
+            data-tag="Women"
+            data-preorder="true"
+            data-colors='["Black","White","Blush","Sage"]'
+            data-sizes='["XS","S","M","L"]'
+            onclick="openModal(this)">
+            Order Now
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
         </div>
       </div>
 
       <!-- SWEATPANTS -->
       <div class="p-card medium c5 reveal reveal-delay-2" data-cat="all men women comfortable">
+        <button class="expand-btn"
+          data-name="Nova Sweats"
+          data-price="1599"
+          data-tag="Most Comfortable"
+          data-preorder="true"
+          data-colors='["Black","Grey","Olive","Navy"]'
+          data-sizes='["XS","S","M","L","XL","XXL"]'
+          data-img=""
+          data-desc="An uncuffed hem gives these sweats a modern, taper-free drape while a soft fleece lining keeps you warm without the bulk. Relaxed through the leg, tapered without feeling fitted — comfort with an edge no one else has."
+          data-subproducts='[
+            {"name":"Nova Sweats — Blackout","color":"Black","img":"nova-sweats-black.jpg"},
+            {"name":"Nova Sweats — Grey Edit","color":"Grey","img":"nova-sweats-grey.jpg"},
+            {"name":"Nova Sweats — Olive Edit","color":"Olive","img":"nova-sweats-olive.jpg"},
+            {"name":"Nova Sweats — Navy Edit","color":"Navy","img":"nova-sweats-navy.jpg"}
+          ]'
+          onclick="openOptions(this)" title="View design options">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          View Options
+        </button>
         <div class="p-img">
           <div class="p-img-inner">
             <div class="p-placeholder">
@@ -953,12 +1162,19 @@
         <div class="p-overlay">
           <div class="p-tag">Most Comfortable</div>
           <div class="p-name">Nova Sweats</div>
-          <div class="p-price">Coming Soon</div>
+          <div class="p-price">Available For Pre-Order</div>
           <div class="p-price">KES 1,599</div>
-          <div class="coming-soon-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Dropping Soon
-          </div>
+          <button class="get-yours-btn"
+            data-name="Nova Sweats"
+            data-price="1599"
+            data-tag="Most Comfortable"
+            data-preorder="true"
+            data-colors='["Black","Grey","Olive","Navy"]'
+            data-sizes='["XS","S","M","L","XL","XXL"]'
+            onclick="openModal(this)">
+            Order Now
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
         </div>
       </div>
 
@@ -1109,6 +1325,18 @@
     </div>
   </div>
 
+  <!-- ── OPTIONS MODAL — enlarges into the product's design/colour choices ── -->
+  <div class="options-overlay" id="optionsOverlay" onclick="handleOptionsOverlayClick(event)">
+    <div class="options-sheet" id="optionsSheet">
+      <button class="options-close" onclick="closeOptions()">×</button>
+      <div class="options-tag" id="optionsTag">Unisex</div>
+      <div class="options-name" id="optionsName">Nova Tee</div>
+      <p class="options-desc" id="optionsDesc"></p>
+      <span class="options-subtitle">Choose Your Design</span>
+      <div class="subproduct-grid" id="subproductGrid"></div>
+    </div>
+  </div>
+
   <script>
     // CURSOR (desktop only)
     const cursor = document.getElementById('cursor');
@@ -1168,14 +1396,20 @@
     };
 
     function openModal(btn) {
-      const name      = btn.dataset.name;
-      const price     = parseInt(btn.dataset.price);
-      const tag       = btn.dataset.tag;
-      const colors    = JSON.parse(btn.dataset.colors);
-      const sizes     = JSON.parse(btn.dataset.sizes);
-      const isPreorder = btn.dataset.preorder === 'true';
+      openModalData({
+        name: btn.dataset.name,
+        price: parseInt(btn.dataset.price),
+        tag: btn.dataset.tag,
+        colors: JSON.parse(btn.dataset.colors),
+        sizes: JSON.parse(btn.dataset.sizes),
+        isPreorder: btn.dataset.preorder === 'true'
+      });
+    }
 
-      modalState = { name, price, size: '', color: '', qty: 1, location: '', isPreorder };
+    function openModalData(data) {
+      const { name, price, tag, colors, sizes, isPreorder, preselectColor } = data;
+
+      modalState = { name, price, size: '', color: preselectColor || '', qty: 1, location: '', isPreorder };
 
       document.getElementById('modalTag').textContent   = tag;
       document.getElementById('modalName').textContent  = name;
@@ -1189,11 +1423,10 @@
       const confirmLabel = document.getElementById('modalConfirmLabel');
       if (isPreorder) {
         notice.classList.add('show');
-        confirmLabel.textContent = 'Pre-Order on WhatsApp';
       } else {
         notice.classList.remove('show');
-        confirmLabel.textContent = 'Order on WhatsApp';
       }
+      confirmLabel.textContent = 'Order on WhatsApp';
 
       const sg = document.getElementById('sizeGrid');
       sg.innerHTML = sizes.map(s =>
@@ -1203,7 +1436,8 @@
       const cg = document.getElementById('colorGrid');
       cg.innerHTML = colors.map(c => {
         const dot = COLOR_DOTS[c] || '#888';
-        return `<button class="color-btn" onclick="selectColor('${c}', this)">
+        const isSel = preselectColor && c === preselectColor;
+        return `<button class="color-btn${isSel ? ' selected' : ''}" onclick="selectColor('${c}', this)">
           <span class="color-dot" style="background:${dot};border:1px solid rgba(255,255,255,0.15)"></span>${c}
         </button>`;
       }).join('');
@@ -1323,10 +1557,68 @@
       document.getElementById('modalConfirm').href = `https://wa.me/254745151478?text=${encodeURIComponent(msg)}`;
     }
 
-    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape') { closeModal(); closeOptions(); }
+    });
     document.getElementById('locationInput').addEventListener('blur', () => {
       setTimeout(() => document.getElementById('locationSuggestions').classList.remove('show'), 200);
     });
+
+    /* ── OPTIONS MODAL — click a product's expand button to see its design/colour options ── */
+    function openOptions(btn) {
+      const data = {
+        name: btn.dataset.name,
+        price: parseInt(btn.dataset.price),
+        tag: btn.dataset.tag,
+        colors: JSON.parse(btn.dataset.colors),
+        sizes: JSON.parse(btn.dataset.sizes),
+        isPreorder: btn.dataset.preorder === 'true',
+        img: btn.dataset.img || '',
+        desc: btn.dataset.desc || ''
+      };
+      const subproducts = JSON.parse(btn.dataset.subproducts || '[]');
+
+      document.getElementById('optionsTag').textContent  = data.tag;
+      document.getElementById('optionsName').textContent = data.name;
+      document.getElementById('optionsDesc').textContent = data.desc;
+
+      const grid = document.getElementById('subproductGrid');
+      grid.innerHTML = subproducts.map(sp => {
+        const dot = COLOR_DOTS[sp.color] || '#888';
+        const fallback = `<div class="p-placeholder-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(242,100,25,0.5)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5" fill="rgba(242,100,25,0.5)"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+        const media = sp.img
+          ? `<img src="${sp.img}" alt="${sp.name}" onerror="this.parentElement.innerHTML='${fallback.replace(/'/g, "&#39;")}'">`
+          : fallback;
+        const payload = { ...data, preselectColor: sp.color, name: sp.name || data.name };
+        return `
+          <button class="subproduct-card" onclick='selectSubproduct(${JSON.stringify(payload).replace(/'/g, "&#39;")})'>
+            <div class="subproduct-media">${media}</div>
+            <div class="subproduct-info">
+              <div class="subproduct-name"><span class="subproduct-dot" style="background:${dot}"></span>${sp.name}</div>
+              <div class="subproduct-price">KES ${data.price.toLocaleString()}${data.isPreorder ? ' · Pre-Order' : ''}</div>
+            </div>
+          </button>`;
+      }).join('');
+
+      document.getElementById('optionsOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeOptions() {
+      document.getElementById('optionsOverlay').classList.remove('open');
+      if (!document.getElementById('modalOverlay').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function handleOptionsOverlayClick(e) {
+      if (e.target === document.getElementById('optionsOverlay')) closeOptions();
+    }
+
+    function selectSubproduct(data) {
+      closeOptions();
+      openModalData(data);
+    }
   </script>
 </body>
 </html>
